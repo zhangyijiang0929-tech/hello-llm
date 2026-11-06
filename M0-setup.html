@@ -76,7 +76,7 @@
   <div class="step">
     <h2><span class="idx">1</span>Python 环境 <span class="tag done">已完成</span></h2>
     <p class="why">已用 Homebrew Python 3.14.6 建好虚拟环境，装好 anthropic 与 scikit-learn。讲义要求 3.11+，3.14 满足。</p>
-    <div class="cmd"><button class="copy">复制</button><pre>cd ~/WorkBuddy/hello-llm && .venv/bin/python --version</pre></div>
+    <div class="cmd"><button class="copy">复制</button><pre>cd ~/"Desktop/FDE课程/M0-环境与工具/hello-llm" && .venv/bin/python --version</pre></div>
     <ul class="check">
       <li><input type="checkbox" id="c1"><label for="c1">输出显示 Python 3.14.6，且命令前不需要 activate</label></li>
       <li><input type="checkbox" id="c2"><label for="c2">知道 <code class="inl">.venv</code> 是什么：项目私有依赖，换项目就要重建一个</label></li>
@@ -86,7 +86,7 @@
   <div class="step">
     <h2><span class="idx">2</span>Git：修掉残留锁并完成首次提交 <span class="tag todo">需要你执行</span></h2>
     <p class="why">这台机器上 Git 2.39.5 已装、全局身份我已配好（yzha1507）。但项目里有个残留的 <code class="inl">.git/HEAD.lock</code>，我的会话被安全策略禁止删除文件，所以下面三条要你自己敲。</p>
-    <div class="cmd"><button class="copy">复制</button><pre>cd ~/WorkBuddy/hello-llm
+    <div class="cmd"><button class="copy">复制</button><pre>cd ~/"Desktop/FDE课程/M0-环境与工具/hello-llm"
 rm -rf .git f05usk5j thlnytbs k21c0wuv
 git init -b main
 git add -A && git commit -m "docs: add hello-llm with first API call"</pre></div>
@@ -125,7 +125,7 @@ Shell Command: Install 'code' command in PATH
 code --version
 
 # 3. 用项目目录重新打开，而不是打开单个文件
-code ~/WorkBuddy/hello-llm</pre></div>
+code ~/"Desktop/FDE课程/M0-环境与工具/hello-llm"</pre></div>
     <ul class="check">
       <li><input type="checkbox" id="c7"><label for="c7"><code class="inl">code --version</code> 有输出，不再是 command not found</label></li>
       <li><input type="checkbox" id="c8"><label for="c8">左侧资源管理器能看到 hello.py / hello_local.py / README.md，失效标签已关闭</label></li>
@@ -140,7 +140,7 @@ ollama serve                 # 保持这个终端开着
 # 另开一个终端：
 ollama list                  # 先看本机已有哪些模型（你这台已有 qwen2.5:1.5b）
 
-cd ~/WorkBuddy/hello-llm
+cd ~/"Desktop/FDE课程/M0-环境与工具/hello-llm"
 .venv/bin/python hello_local.py</pre></div>
     <div class="note"><b>你这台机器已有 qwen2.5:1.5b 和 deepseek-r1:1.5b</b>，脚本默认用前者，无需再下载。想换模型：<code class="inl">export OLLAMA_MODEL=deepseek-r1:1.5b</code>。脚本会自动检测已装模型，指定的模型不存在时退回第一个可用的。</div>
     <ul class="check">
@@ -155,7 +155,7 @@ cd ~/WorkBuddy/hello-llm
 open "https://github.com/new?name=hello-llm&visibility=public"
 
 # 2. 加远端并推送
-cd ~/WorkBuddy/hello-llm
+cd ~/"Desktop/FDE课程/M0-环境与工具/hello-llm"
 git remote add origin git@github.com:yzha1507/hello-llm.git
 git push -u origin main</pre></div>
     <div class="note warn"><b>推送前最后一道检查：</b><code class="inl">git ls-files | grep -i env</code> 只应出现 <code class="inl">.env.example</code>。真实 key 一旦进过提交，就必须吊销重发。</div>
