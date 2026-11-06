@@ -1,0 +1,13 @@
+# 敏感信息：真实 key 只在本地 .env 或环境变量里，绝不提交
+.env
+
+# Python
+.venv/
+__pycache__/
+*.py[rwd]?
+.pytest_cache/
+
+# 编辑器与系统
+.DS_Store
+.vscode/
+.idea/

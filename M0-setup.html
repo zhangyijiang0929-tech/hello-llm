@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FDE M0 · 环境搭建操作手册</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1a1d21; --muted:#6b7280;
+    --line:#e5e7eb; --accent:#2f6feb; --accent-soft:#eef4ff;
+    --ok:#15803d; --ok-soft:#eaf7ee; --warn:#b45309; --warn-soft:#fff7e6;
+    --code-bg:#0f172a; --code-ink:#e2e8f0;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Arial,sans-serif;}
+  .wrap{max-width:920px;margin:0 auto;padding:40px 24px 80px}
+  header{margin-bottom:28px}
+  h1{font-size:26px;margin:0 0 8px;letter-spacing:-.3px}
+  .sub{color:var(--muted);font-size:14px;margin:0}
+  .bar{position:sticky;top:0;z-index:9;background:rgba(247,248,250,.92);
+    backdrop-filter:blur(8px);padding:14px 0;margin-bottom:8px;border-bottom:1px solid var(--line)}
+  .bar-inner{display:flex;align-items:center;gap:14px}
+  .track{flex:1;height:8px;background:#e6e9ef;border-radius:99px;overflow:hidden}
+  .fill{height:100%;width:0;background:linear-gradient(90deg,#2f6feb,#4f9cf9);transition:width .3s}
+  .count{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px;white-space:nowrap}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:20px 22px;margin:16px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .step h2{font-size:17px;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+  .idx{display:inline-flex;width:26px;height:26px;border-radius:8px;background:var(--accent-soft);
+    color:var(--accent);font-size:13px;font-weight:600;align-items:center;justify-content:center;flex:0 0 auto}
+  .tag{font-size:12px;padding:2px 8px;border-radius:99px;font-weight:500}
+  .tag.done{background:var(--ok-soft);color:var(--ok)}
+  .tag.todo{background:var(--warn-soft);color:var(--warn)}
+  .why{color:var(--muted);font-size:13.5px;margin:6px 0 14px}
+  ul.check{list-style:none;padding:0;margin:10px 0 0}
+  ul.check li{display:flex;gap:10px;align-items:flex-start;padding:6px 0;font-size:14.5px}
+  input[type=checkbox]{margin-top:5px;width:16px;height:16px;accent-color:#2f6feb;flex:0 0 auto;cursor:pointer}
+  label{cursor:pointer}
+  li.checked label{color:var(--muted);text-decoration:line-through}
+  .cmd{position:relative;background:var(--code-bg);border-radius:10px;margin:10px 0;overflow:hidden}
+  .cmd pre{margin:0;padding:14px 46px 14px 16px;color:var(--code-ink);
+    font:13px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;word-break:break-word}
+  .copy{position:absolute;top:8px;right:8px;background:#1e293b;color:#cbd5e1;border:1px solid #334155;
+    border-radius:6px;font-size:11.5px;padding:3px 8px;cursor:pointer}
+  .copy:hover{background:#334155;color:#fff}
+  .note{background:var(--accent-soft);border-left:3px solid var(--accent);padding:10px 14px;
+    border-radius:0 8px 8px 0;font-size:13.5px;margin:12px 0}
+  .note.warn{background:var(--warn-soft);border-left-color:var(--warn)}
+  .note b{font-weight:600}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:12.5px;background:#fbfbfd}
+  code.inl{background:#eef1f5;padding:1px 6px;border-radius:5px;
+    font:12.5px ui-monospace,SFMono-Regular,Menlo,monospace}
+  footer{color:var(--muted);font-size:13px;margin-top:36px;text-align:center}
+  .reset{background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;
+    padding:4px 12px;font-size:12.5px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>FDE 讲义 M0 · 环境搭建操作手册</h1>
+    <p class="sub">10 个勾选项，做完就达到讲义「预习自检清单」的要求。勾选状态会保存在本机。</p>
+  </header>
+
+  <div class="bar">
+    <div class="bar-inner">
+      <div class="track"><div class="fill" id="fill"></div></div>
+      <span class="count" id="count">0 / 10</span>
+      <button class="reset" onclick="resetAll()">重置</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <h2><span class="idx">1</span>Python 环境 <span class="tag done">已完成</span></h2>
+    <p class="why">已用 Homebrew Python 3.14.6 建好虚拟环境，装好 anthropic 与 scikit-learn。讲义要求 3.11+，3.14 满足。</p>
+    <div class="cmd"><button class="copy">复制</button><pre>cd ~/WorkBuddy/hello-llm && .venv/bin/python --version</pre></div>
+    <ul class="check">
+      <li><input type="checkbox" id="c1"><label for="c1">输出显示 Python 3.14.6，且命令前不需要 activate</label></li>
+      <li><input type="checkbox" id="c2"><label for="c2">知道 <code class="inl">.venv</code> 是什么：项目私有依赖，换项目就要重建一个</label></li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <h2><span class="idx">2</span>Git：修掉残留锁并完成首次提交 <span class="tag todo">需要你执行</span></h2>
+    <p class="why">这台机器上 Git 2.39.5 已装、全局身份我已配好（yzha1507）。但项目里有个残留的 <code class="inl">.git/HEAD.lock</code>，我的会话被安全策略禁止删除文件，所以下面三条要你自己敲。</p>
+    <div class="cmd"><button class="copy">复制</button><pre>cd ~/WorkBuddy/hello-llm
+rm -rf .git f05usk5j thlnytbs k21c0wuv
+git init -b main
+git add -A && git commit -m "docs: add hello-llm with first API call"</pre></div>
+    <div class="note warn"><b>为什么敢删 .git：</b>这个目录是我刚才初始化失败留下的半成品，里面没有任何提交记录，删掉不损失任何东西。第一次提交完成后，<code class="inl">git log --oneline</code> 应看到一行。</div>
+    <ul class="check">
+      <li><input type="checkbox" id="c3"><label for="c3"><code class="inl">git log --oneline</code> 看到一条提交，信息以 <code class="inl">docs:</code> 开头</label></li>
+      <li><input type="checkbox" id="c4"><label for="c4"><code class="inl">git ls-files</code> 里没有 <code class="inl">.env</code>、没有 <code class="inl">.venv</code>（说明 .gitignore 生效）</label></li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <h2><span class="idx">3</span>Docker Desktop <span class="tag todo">需要你执行</span></h2>
+    <p class="why">讲义要求「一条 docker run 就能跑」。你选的是 Docker Desktop，Apple Silicon 用 arm64 安装包。</p>
+    <div class="cmd"><button class="copy">复制</button><pre># 方式一：Homebrew（推荐，一条命令）
+brew install --cask docker
+
+# 方式二：手动下载
+open https://desktop.docker.com/mac/main/arm64/Docker.dmg</pre></div>
+    <p class="why">装完必须<b>手动启动一次</b> Docker 应用（菜单栏出现鲸鱼图标），首次启动会要求授权系统助手，按提示输入密码。然后验证：</p>
+    <div class="cmd"><button class="copy">复制</button><pre>docker --version
+docker run --rm hello-world</pre></div>
+    <div class="note warn"><b>macOS 27 是预发布版</b>，如果启动后提示「无法验证开发者」，去 系统设置 → 隐私与安全性 → 仍要打开。若 <code class="inl">docker</code> 命令找不到，把 <code class="inl">/Applications/Docker.app/Contents/Resources/bin</code> 加到 PATH。</div>
+    <ul class="check">
+      <li><input type="checkbox" id="c5"><label for="c5"><code class="inl">docker run --rm hello-world</code> 输出 “Hello from Docker!”</label></li>
+      <li><input type="checkbox" id="c6"><label for="c6">菜单栏鲸鱼图标是绿色/常驻状态，不是灰色</label></li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <h2><span class="idx">4</span>VS Code：code 命令 + 打开正确目录 <span class="tag todo">需要你执行</span></h2>
+    <p class="why">VS Code 和 Python/Pylance 扩展都已装好。缺的只是终端里的 <code class="inl">code</code> 命令。另外你截图里那个 <code class="inl">stepl_check.py</code> 标签是失效的——它指向的路径已经不存在，所以编辑器报 “file was not found”。</p>
+    <div class="cmd"><button class="copy">复制</button><pre># 1. 装 code 命令（VS Code 窗口里按 Cmd+Shift+P，输入下面这句并回车）
+Shell Command: Install 'code' command in PATH
+
+# 2. 回到终端验证
+code --version
+
+# 3. 用项目目录重新打开，而不是打开单个文件
+code ~/WorkBuddy/hello-llm</pre></div>
+    <ul class="check">
+      <li><input type="checkbox" id="c7"><label for="c7"><code class="inl">code --version</code> 有输出，不再是 command not found</label></li>
+      <li><input type="checkbox" id="c8"><label for="c8">左侧资源管理器能看到 hello.py / hello_local.py / README.md，失效标签已关闭</label></li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <h2><span class="idx">5</span>第一次调用 LLM（免费路线：本地 Ollama） <span class="tag todo">需要你执行</span></h2>
+    <p class="why">你没有 Anthropic Key，所以先用本地模型跑通同样的流程。代码已写好：<code class="inl">hello_local.py</code> 用 urllib 直接 POST 一个 HTTP 接口——这正是讲义 0.4「HTTP 与 REST」的实操。</p>
+    <div class="cmd"><button class="copy">复制</button><pre>brew install ollama
+ollama serve                 # 保持这个终端开着
+# 另开一个终端：
+ollama pull qwen3:4b         # 约 2.5GB，只需下载一次
+
+cd ~/WorkBuddy/hello-llm
+.venv/bin/python hello_local.py</pre></div>
+    <div class="note"><b>内存小于 16GB</b> 就把模型换成 <code class="inl">qwen3:1.7b</code>；命令里把 <code class="inl">qwen3:4b</code> 全部替换，并 <code class="inl">export OLLAMA_MODEL=qwen3:1.7b</code>。</div>
+    <ul class="check">
+      <li><input type="checkbox" id="c9"><label for="c9">脚本打印出回答，并显示「输入 token / 输出 token」两个数字</label></li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <h2><span class="idx">6</span>推到 GitHub（M0 真正的产出） <span class="tag todo">需要你执行</span></h2>
+    <p class="why">SSH 我已经验过：<code class="inl">git@github.com</code> 认到账号 <b>yzha1507</b>，可以直接推，不用再配密钥。</p>
+    <div class="cmd"><button class="copy">复制</button><pre># 1. 浏览器里新建空仓库（不要勾选 README / .gitignore）
+open "https://github.com/new?name=hello-llm&visibility=public"
+
+# 2. 加远端并推送
+cd ~/WorkBuddy/hello-llm
+git remote add origin git@github.com:yzha1507/hello-llm.git
+git push -u origin main</pre></div>
+    <div class="note warn"><b>推送前最后一道检查：</b><code class="inl">git ls-files | grep -i env</code> 只应出现 <code class="inl">.env.example</code>。真实 key 一旦进过提交，就必须吊销重发。</div>
+    <ul class="check">
+      <li><input type="checkbox" id="c10"><label for="c10">仓库页面能看到 5 个文件，且提交历史里没有密钥</label></li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <h2><span class="idx">附录</span>常见报错对照（讲义 0.5 那张表）</h2>
+    <table>
+      <tr><th>现象</th><th>原因</th><th>处理</th></tr>
+      <tr><td>401 / authentication error</td><td>Key 错误或环境变量没读到</td><td><code class="inl">echo $ANTHROPIC_API_KEY</code> 看有没有值</td></tr>
+      <tr><td>429 / rate limit</td><td>请求太频繁或额度不足</td><td>等一会重试，检查账户额度</td></tr>
+      <tr><td>500 / 502 / 504</td><td>服务方的问题，不是你的调用错</td><td>看日志区分超时还是格式错误，超时走降级</td></tr>
+      <tr><td>Connection refused（Ollama）</td><td>Ollama 没启动</td><td>先 <code class="inl">ollama serve</code>，再跑脚本</td></tr>
+      <tr><td>git: HEAD.lock File exists</td><td>上次中断留下锁文件</td><td><code class="inl">rm -rf .git</code> 后重新 init（无提交损失时）</td></tr>
+    </table>
+  </div>
+
+  <footer>完成任务后，把 10 个勾全部点亮，就可以进入 M1 了。</footer>
+</div>
+<script>
+const boxes = [...document.querySelectorAll('input[type=checkbox]')];
+const KEY = 'fde-m0-checklist';
+function save(){ localStorage.setItem(KEY, JSON.stringify(boxes.map(b=>b.checked))); }
+function paint(){
+  const n = boxes.filter(b=>b.checked).length;
+  document.getElementById('count').textContent = n + ' / ' + boxes.length;
+  document.getElementById('fill').style.width = (n/boxes.length*100) + '%';
+  boxes.forEach(b=>b.closest('li').classList.toggle('checked', b.checked));
+}
+const saved = JSON.parse(localStorage.getItem(KEY) || '[]');
+boxes.forEach((b,i)=>{ b.checked = !!saved[i]; b.addEventListener('change', ()=>{ paint(); save(); }); });
+document.querySelectorAll('.copy').forEach(btn=>{
+  btn.addEventListener('click', async ()=>{
+    const text = btn.parentElement.querySelector('pre').innerText;
+    try { await navigator.clipboard.writeText(text); btn.textContent='已复制'; }
+    catch(e){ btn.textContent='请手动选中'; }
+    setTimeout(()=>btn.textContent='复制', 1400);
+  });
+});
+function resetAll(){ boxes.forEach(b=>b.checked=false); paint(); save(); }
+paint();
+</script>
+</body>
+</html>
