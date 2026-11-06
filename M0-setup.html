@@ -138,11 +138,11 @@ code ~/WorkBuddy/hello-llm</pre></div>
     <div class="cmd"><button class="copy">复制</button><pre>brew install ollama
 ollama serve                 # 保持这个终端开着
 # 另开一个终端：
-ollama pull qwen3:4b         # 约 2.5GB，只需下载一次
+ollama list                  # 先看本机已有哪些模型（你这台已有 qwen2.5:1.5b）
 
 cd ~/WorkBuddy/hello-llm
 .venv/bin/python hello_local.py</pre></div>
-    <div class="note"><b>内存小于 16GB</b> 就把模型换成 <code class="inl">qwen3:1.7b</code>；命令里把 <code class="inl">qwen3:4b</code> 全部替换，并 <code class="inl">export OLLAMA_MODEL=qwen3:1.7b</code>。</div>
+    <div class="note"><b>你这台机器已有 qwen2.5:1.5b 和 deepseek-r1:1.5b</b>，脚本默认用前者，无需再下载。想换模型：<code class="inl">export OLLAMA_MODEL=deepseek-r1:1.5b</code>。脚本会自动检测已装模型，指定的模型不存在时退回第一个可用的。</div>
     <ul class="check">
       <li><input type="checkbox" id="c9"><label for="c9">脚本打印出回答，并显示「输入 token / 输出 token」两个数字</label></li>
     </ul>
